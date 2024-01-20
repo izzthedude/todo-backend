@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "todo_backend"
+name = "todo_django"
 version = "0.1.0"
 description = "The backend for my Todo app project"
 authors = [{ name = "Izzat Z.", email = "izzat.zainir11@gmail.com" }]
@@ -42,7 +42,7 @@ extend-select = [
 
 [tool.ruff.isort]
 case-sensitive = true
-known-first-party = ["todo_backend"]
+known-first-party = ["todo_django"]
 
 [tool.mypy]
 strict = true

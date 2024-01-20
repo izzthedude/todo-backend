@@ -1,4 +1,4 @@
-# todo_backend
+# todo_django
 
 ## Table of Contents
 
