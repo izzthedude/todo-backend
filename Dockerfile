@@ -10,7 +10,7 @@ RUN python -m venv /venv && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-deps \
         build-base postgresql-dev musl-dev linux-headers && \
-    /venv/bin/pip install /app[prod] && \
+    /venv/bin/pip install -e /app[prod] && \
     apk del .tmp-deps
 
 WORKDIR /app/src/todo_django

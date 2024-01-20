@@ -16,6 +16,7 @@ dependencies = ["django==5.0.0"]
 prod = ["psycopg2==2.9.9"]
 dev = ["psycopg2-binary==2.9.9", "pre-commit==3.6.0"]
 dev-lint = ["ruff==0.1.13", "mypy==1.8.0"]
+dev-typing = ["django-stubs>=4.2"]
 
 [tool.ruff]
 src = ["src"]
@@ -39,12 +40,18 @@ extend-select = [
     "TCH", # flake8-type-checking
     "TID", # flake8-tidy-imports
 ]
+extend-exclude = ["**/migrations/*"]
 
 [tool.ruff.isort]
 case-sensitive = true
 known-first-party = ["todo_django"]
 
 [tool.mypy]
+mypy_path = "src"
 strict = true
 show_error_codes = true
 explicit_package_bases = true
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "todo_django.app.settings"
