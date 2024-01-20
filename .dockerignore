@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# Selectively include
+!src/
+src/*.egg-info
+src/*.sqlite3
+src/**/__pycache__
+
+!pyproject.toml

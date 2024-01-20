@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - ./data/db:/var/lib/postgres/data
+    environment:
+    - POSTGRES_DB=devdb
+    - POSTGRES_USER=devuser
+    - POSTGRES_PASSWORD=devpass
+
+  backend:
+    build: .
+    command: sh -c "
+      python src/manage.py retry_db &&
+      python src/manage.py migrate &&
+      python src/manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app:z
+    environment:
+      - DJANGO_SECRET_KEY=supersecretpassword
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=devpass
+    depends_on:
+      - db
