@@ -11,6 +11,9 @@ class Category(models.Model):
         ],
     )
 
+    def __str__(self) -> str:
+        return self.name
+
     class Meta:
         verbose_name_plural = "categories"
 
@@ -27,6 +30,7 @@ class Item(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
+        related_name="items",
     )
     todo = models.CharField(
         max_length=128,
@@ -37,3 +41,6 @@ class Item(models.Model):
     completed = models.BooleanField(
         default=False,
     )
+
+    def __str__(self) -> str:
+        return self.todo

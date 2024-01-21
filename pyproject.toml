@@ -10,7 +10,7 @@ authors = [{ name = "Izzat Z.", email = "izzat.zainir11@gmail.com" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.12"
-dependencies = ["django==5.0.0"]
+dependencies = ["django==5.0.0", "djangorestframework==3.14.0"]
 
 [project.optional-dependencies]
 prod = ["psycopg2==2.9.9"]
@@ -52,6 +52,10 @@ strict = true
 show_error_codes = true
 explicit_package_bases = true
 plugins = ["mypy_django_plugin.main"]
+
+[[tool.mypy.overrides]]
+module = ["*.api.*"]
+disable_error_code = ["misc"]
 
 [tool.django-stubs]
 django_settings_module = "todo_django.app.settings"

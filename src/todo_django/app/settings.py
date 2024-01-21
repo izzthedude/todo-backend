@@ -32,7 +32,11 @@ ALLOWED_HOSTS: list[str] = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Apps
     "todo_django.todo",
+    # Plugins/extensions
+    "rest_framework",
+    # Django
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
