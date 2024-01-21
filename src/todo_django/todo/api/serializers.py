@@ -36,7 +36,7 @@ class CategoryField(serializers.PrimaryKeyRelatedField):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-    category = CategoryField(queryset=Category.objects.all())
+    category = CategoryField(queryset=Category.objects.all(), required=False)
 
     class Meta:
         model = Item

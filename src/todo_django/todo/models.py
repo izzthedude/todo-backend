@@ -29,6 +29,7 @@ class Item(models.Model):
         Category,
         null=True,
         blank=True,
+        default=None,
         on_delete=models.SET_NULL,
         related_name="items",
     )
