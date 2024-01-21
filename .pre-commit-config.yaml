@@ -30,3 +30,4 @@ repos:
           - psycopg2-binary==2.9.9
           - django-stubs>=4.2
           - djangorestframework==3.14.0
+          - django-filter==23.5

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "todo_django.todo",
     # Plugins/extensions
     "rest_framework",
+    "django_filters",
     # Django
     "django.contrib.admin",
     "django.contrib.auth",
@@ -74,6 +75,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "app.wsgi.application"
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+}
 
 
 # Database
