@@ -11,6 +11,11 @@ class Category(models.Model):
         ],
     )
 
+    @classmethod
+    def get_default_pk(cls) -> int:
+        category, created = cls.objects.get_or_create(name="None")
+        return category.pk
+
     def __str__(self) -> str:
         return self.name
 
@@ -27,10 +32,9 @@ class Item(models.Model):
     )
     category = models.ForeignKey(
         Category,
-        null=True,
         blank=True,
-        default=None,
-        on_delete=models.SET_NULL,
+        default=Category.get_default_pk,
+        on_delete=models.SET_DEFAULT,
         related_name="items",
     )
     todo = models.CharField(

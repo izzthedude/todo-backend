@@ -3,6 +3,18 @@
 import django.core.validators
 import django.db.models.deletion
 from django.db import migrations, models
+from django.apps.registry import Apps
+from django.db.backends.postgresql.schema import DatabaseSchemaEditor
+
+
+def create_initial_category(apps: Apps, schema_editor: DatabaseSchemaEditor) -> None:
+    Category = apps.get_model("todo", "Category")
+    Category.objects.get_or_create(id=1, name="None")
+
+
+def reverse_create_initial_category(apps: Apps, schema_editor: DatabaseSchemaEditor) -> None:
+    Category = apps.get_model("todo", "Category")
+    Category.objects.get(id=1, name="None").delete()
 
 
 class Migration(migrations.Migration):
@@ -34,4 +46,8 @@ class Migration(migrations.Migration):
                 ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='todo.category')),
             ],
         ),
+        migrations.RunPython(
+            create_initial_category,  # type: ignore
+            reverse_create_initial_category,  # type:ignore
+        )
     ]

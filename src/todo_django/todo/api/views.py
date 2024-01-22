@@ -2,6 +2,7 @@ from typing import Any
 
 from django.db.models import QuerySet
 from rest_framework import generics
+from rest_framework.exceptions import APIException
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -17,6 +18,14 @@ class CategoryListView(generics.ListCreateAPIView):
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+    def delete(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        # Prevent None Category from being deleted
+        none_category = Category.objects.get(id=1, name="None")
+        if kwargs["pk"] == none_category.pk:
+            raise APIException("The 'None' category cannot be deleted.")
+
+        return super().delete(request, *args, **kwargs)
 
 
 class ItemListView(generics.ListCreateAPIView):
