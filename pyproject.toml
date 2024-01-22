@@ -10,11 +10,7 @@ authors = [{ name = "Izzat Z.", email = "izzat.zainir11@gmail.com" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.12"
-dependencies = [
-    "django==5.0.0",
-    "djangorestframework==3.14.0",
-    "django-filter==23.5",
-]
+dependencies = ["django==5.0.0", "djangorestframework==3.14.0"]
 
 [project.optional-dependencies]
 prod = ["psycopg2==2.9.9"]

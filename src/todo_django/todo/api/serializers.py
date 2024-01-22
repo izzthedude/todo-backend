@@ -14,6 +14,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class CategoryField(serializers.PrimaryKeyRelatedField):
+    """
+    This field makes it so that you can GET the Category object, but POST with just
+    a Category's ID.
+    """
+
     def to_representation(self, value: int) -> ReturnDict | None:
         pk = super().to_representation(value)
 

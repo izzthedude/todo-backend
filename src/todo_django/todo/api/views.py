@@ -1,10 +1,10 @@
 from typing import Any
 
+from django.db.models import QuerySet
 from rest_framework import generics
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from todo_django.todo.api.filters import ItemSearchFilter
 from todo_django.todo.api.serializers import CategorySerializer, ItemSerializer
 from todo_django.todo.models import Category, Item
 
@@ -20,8 +20,17 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ItemListView(generics.ListCreateAPIView):
-    queryset = Item.objects.order_by("completed", "created")
     serializer_class = ItemSerializer
+
+    def get_queryset(self) -> QuerySet[Item]:
+        queryset = Item.objects.order_by("completed", "created")
+
+        # Search query
+        search = self.request.query_params.get("q")
+        if search:
+            queryset = Item.objects.filter(todo__icontains=search)
+
+        return queryset
 
 
 class ItemDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -34,7 +43,9 @@ class ItemDetailView(generics.RetrieveUpdateDestroyAPIView):
         return super().patch(request, *args, **kwargs)
 
 
-class ItemSearchView(generics.ListAPIView):
-    queryset = Item.objects.all()
+class ItemCategoryListView(generics.ListAPIView):
     serializer_class = ItemSerializer
-    filterset_class = ItemSearchFilter
+
+    def get_queryset(self) -> QuerySet[Item]:
+        category_id: int = self.kwargs["pk"]
+        return Item.objects.filter(category__id=category_id)
